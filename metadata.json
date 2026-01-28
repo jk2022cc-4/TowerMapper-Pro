@@ -1,0 +1,7 @@
+{
+  "name": "TowerMapper Pro",
+  "description": "A professional GIS tool for mapping ISP towers and designated locations with distance and direction tracking, CSV bulk import, and data export features.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

@@ -1,0 +1,43 @@
+
+/**
+ * Calculates distance between two points in kilometers using Haversine formula
+ */
+export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * (Math.PI / 180)) *
+      Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+/**
+ * Calculates bearing from start to end in degrees
+ */
+export const calculateBearing = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const startLat = (lat1 * Math.PI) / 180;
+  const startLng = (lon1 * Math.PI) / 180;
+  const destLat = (lat2 * Math.PI) / 180;
+  const destLng = (lon2 * Math.PI) / 180;
+
+  const y = Math.sin(destLng - startLng) * Math.cos(destLat);
+  const x =
+    Math.cos(startLat) * Math.sin(destLat) -
+    Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
+  let brng = (Math.atan2(y, x) * 180) / Math.PI;
+  return (brng + 360) % 360;
+};
+
+/**
+ * Converts degree bearing to cardinal direction
+ */
+export const getCardinalDirection = (bearing: number): string => {
+  const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  const index = Math.round(bearing / 45) % 8;
+  return directions[index];
+};
